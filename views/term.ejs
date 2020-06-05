@@ -1,0 +1,18 @@
+<%- include("templates/header") %>
+
+<div class="container flexcontainer"> 
+  <div class="d-flex flex-column">
+    <form action="/" method="POST">
+      <div class="form-group">
+        <input class="form-control mt-4" type="text" placeholder="File Name -- Default folder is Documents type /newfolder/index.py for new folder creation" name="filename" value="<%=data.file%>">
+      </div>
+      <div class="form-group">
+        <textarea name='code' id="editor" class="mb-2 mt-3 p-2 form-control" rows="25" placeholder="Write Code Here"><%=data.code%></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+    <div id="terminal-container" class="mb-2"></div>
+  </div>
+</div>
+
+<%- include("templates/footer") %>
