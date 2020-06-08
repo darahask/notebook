@@ -1,15 +1,20 @@
 <%- include("templates/header") %>
 
-<div class="container flexcontainer"> 
+<div class="container flexcontainer">
+  
+  <form action="/open" method="POST" enctype="multipart/form-data" class="mt-2" id="upform" style="display: none;">
+    <input type="file" name="myFile" id="upfile" >
+  </form>
+
   <div class="d-flex flex-column">
     <form action="/" method="POST">
-      <div class="form-group">
-        <input class="form-control mt-4" type="text" placeholder="File Name -- Default folder is Documents type /newfolder/index.py for new folder creation" name="filename" value="<%=data.file%>">
+      <div class="form-group mt-3" >
+        <input class="form-control " type="text" placeholder="File Name -- Default folder is Documents type /newfolder/index.py for new folder creation" name="filename" value="<%=data.file%>">
       </div>
       <div class="form-group">
-        <textarea name='code' id="editor" class="mb-2 mt-3 p-2 form-control" rows="25" placeholder="Write Code Here"><%=data.code%></textarea>
+        <textarea name='code' id="editor" class="mb-2 p-2 form-control mt-3" rows="26" placeholder="Write Code Here"><%=data.code%></textarea>
       </div>
-      <button type="submit" class="btn btn-primary">Save</button>
+      <button type="submit" class="btn btn-primary btn-block">Save</button>
     </form>
     <div id="terminal-container" class="mb-2"></div>
   </div>

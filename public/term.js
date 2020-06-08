@@ -1,6 +1,6 @@
+feather.replace();
 var socket;
 var button = document.getElementById("termstart");
-
 button.onclick = function () {
   var terminalContainer = document.getElementById("terminal-container");
   var term = new Terminal({ cursorBlink: true });
@@ -32,4 +32,12 @@ button.onclick = function () {
 
 function install(lang){
   socket.emit('data','sudo apt-get install ' + lang +'\n');
+}
+
+function submitForm(){
+  document.getElementById('upfile').click();
+  document.getElementById('upfile').onchange = function(){
+    document.getElementById('upform').submit();
+  };
+  
 }
