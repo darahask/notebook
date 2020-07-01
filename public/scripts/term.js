@@ -1,12 +1,12 @@
 feather.replace();
-var socket;
 var button = document.getElementById("termstart");
-button.onclick = function () {
+
+window.onload = function () {
   var terminalContainer = document.getElementById("terminal-container");
   var term = new Terminal({ cursorBlink: true });
   term.open(terminalContainer);
 
-  socket = io.connect("http://localhost:3000");
+  var socket = io.connect("http://localhost:3000");
 
   socket.on("connect", function () {
     term.write("\r\n*** Connected to backend***\r\n");
@@ -18,8 +18,8 @@ button.onclick = function () {
 
     // Backend -> Browser
     socket.on("data", function (data) {
-      if(data == '[sudo] password for codeb: '){
-        socket.emit('data','3823\n');
+      if (data == "[sudo] password for codeb: ") {
+        socket.emit("data", "3823\n");
       }
       term.write(data);
     });
@@ -30,14 +30,9 @@ button.onclick = function () {
   });
 };
 
-function install(lang){
-  socket.emit('data','sudo apt-get install ' + lang +'\n');
-}
-
-function submitForm(){
-  document.getElementById('upfile').click();
-  document.getElementById('upfile').onchange = function(){
-    document.getElementById('upform').submit();
+function submitForm() {
+  document.getElementById("upfile").click();
+  document.getElementById("upfile").onchange = function () {
+    document.getElementById("upform").submit();
   };
-  
 }

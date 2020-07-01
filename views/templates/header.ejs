@@ -17,7 +17,8 @@
     <script src="/xterm/lib/xterm.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://unpkg.com/feather-icons"></script>
-  </head>
+    
+  </head> 
 
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -37,24 +38,6 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                id="navbarDropdown"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                Tutorials
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" role="button" onclick="install('gcc')" href="#">C</a>
-                <a class="dropdown-item" role="button" onclick="install('g++')" href="#">C++</a>
-                <a class="dropdown-item" role="button" onclick="install('python3')" href="#">Python</a>
-              </div>
-            </li>
           </ul>
           <button class="btn btn-primary mr-3" onclick="submitForm()">Open File</button>
           <button class="btn btn-success" id="termstart">Connect</button>
