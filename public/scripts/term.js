@@ -1,5 +1,4 @@
 feather.replace();
-var button = document.getElementById("termstart");
 
 window.onload = function () {
   var terminalContainer = document.getElementById("terminal-container");
