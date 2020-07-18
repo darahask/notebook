@@ -5,7 +5,7 @@ window.onload = function () {
   var term = new Terminal({ cursorBlink: true });
   term.open(terminalContainer);
 
-  var socket = io.connect("http://localhost:3000");
+  var socket = io.connect("https://arcane-meadow-86622.herokuapp.com");
 
   socket.on("connect", function () {
     term.write("\r\n*** Connected to backend***\r\n");

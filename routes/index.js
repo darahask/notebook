@@ -9,6 +9,10 @@ var data = {};
 var extxt = [];
 
 
+router.get('/split',function(req,res){
+  res.render('split');
+})
+
 router.get('/',function(req,res){
   res.render('cover');
 });
@@ -76,13 +80,21 @@ router.get('/info/:id',function(req,res){
 });
 
 router.get("/editor", function (req, res) {
-  res.render("term.ejs",{data:data});
+  process.exec('/usr/sbin/sshd -D',(err,stdout,stderr)=>{
+    if (err) {  
+      console.error(err);  
+      return;  
+    }  
+    console.log(stderr);
+    console.log(stdout);  
+    res.render("term.ejs",{data:data});
+  })
 });
 
 router.post("/editor",function(req,res){
   var fileName = req.body.filename;
   var code = req.body.code;
-  fs.writeFile('/home/codeb/Documents/' + fileName,code,function(err){
+  fs.writeFile('/home/darahas/' + fileName,code,function(err){
     if(err) return console.log(err);
   });
   data = {file:fileName,code:code};

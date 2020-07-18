@@ -43,7 +43,7 @@ io.on("connection", function (socket) {
           });
       })
     })
-    .on("close", function () {
+    .on("close", function () {  
       socket.emit("data", "\r\n*** SSH CONNECTION CLOSED ***\r\n");
     })
     .on("error", function (err) {
@@ -55,5 +55,5 @@ io.on("connection", function (socket) {
 
 });
 
-server.listen(3000);
+server.listen(process.env.PORT,process.env.IP);
 console.log('SERVER STARTED!!!');
