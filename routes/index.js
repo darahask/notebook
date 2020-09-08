@@ -1,13 +1,61 @@
 var express = require('express');
 var router = express.Router({mergeParams:true});
 var pdfocr = require('../ocr');
-var process = require('child_process');
-var fs = require('fs');
+var fs = require('fs'); 
 var multer = require('multer');
+const util = require('util');
+const exec = util.promisify(require('child_process').exec);
 
 var data = {};
-var extxt = [];
-
+var extxt = {};
+var intructions = {
+  gcc:{
+    display:[
+      "apt-get update",
+      "apt-get install gcc",
+      "gcc --version"
+    ],
+    install:[
+      'echo 3823 | sudo -S apt-get -y update',
+      'echo 3823 | sudo -S apt-get -y install gcc',
+      "gcc --version"
+    ]
+  },
+  'g++':{
+    display:[
+      "apt-get update",
+      "apt-get install g++",
+      "g++ --version"
+    ],
+    install:[
+      'echo 3823 | sudo -S apt-get -y update',
+      'echo 3823 | sudo -S apt-get -y install g++',
+      "g++ --version"
+    ]
+  },
+  python3:{
+    display:[
+      "apt-get update",
+      "apt-get install python3",
+      "python3 --version"
+    ],
+    install:[
+      'echo 3823 | sudo -S apt-get -y update',
+      'echo 3823 | sudo -S apt-get -y install python3',
+      "python3 --version"
+    ]
+  },
+  libreoffice:{
+    display:[
+      "apt-get update",
+      "apt-get install libreoffice",
+    ],
+    install:[
+      'echo 3823 | sudo -S apt-get -y update',
+      'echo 3823 | sudo -S apt-get -y install libreoffice',
+    ]
+  }
+}
 
 router.get('/split',function(req,res){
   res.render('split');
@@ -21,7 +69,7 @@ router.get('/info/:id',function(req,res){
   if(req.params.id == 'gcc'){
     var process = pdfocr('./instfiles/advancedC/in.pdf');
     process.on('complete',function(data){
-      extxt = data.text_pages;
+      extxt = {inst:data.text_pages,route:'gcc'};
       if(!req.query.download){
         res.render('info',{data:extxt});
       }
@@ -35,7 +83,7 @@ router.get('/info/:id',function(req,res){
   }else if(req.params.id == 'g++'){
     var process = pdfocr('./instfiles/advancedc++/in.pdf');
     process.on('complete',function(data){
-      extxt = data.text_pages;
+      extxt = {inst:data.text_pages,route:'g++'};
       if(!req.query.download){
         res.render('info',{data:extxt});
       }
@@ -49,7 +97,7 @@ router.get('/info/:id',function(req,res){
   }else if(req.params.id == 'python3'){
     var process = pdfocr('./instfiles/python3/in.pdf');
     process.on('complete',function(data){
-      extxt = data.text_pages;
+      extxt = {inst:data.text_pages,route:'python3'};
       if(!req.query.download){
         res.render('info',{data:extxt});
       }
@@ -63,7 +111,7 @@ router.get('/info/:id',function(req,res){
   }else if(req.params.id == 'libreoffice'){
     var process = pdfocr('./instfiles/libreoffice/in.pdf');
     process.on('complete',function(data){
-      extxt = data.text_pages;
+      extxt = {inst:data.text_pages,route:'libreoffice'};
       if(!req.query.download){
         res.render('info',{data:extxt});
       }
@@ -79,16 +127,34 @@ router.get('/info/:id',function(req,res){
   }
 });
 
+router.get('/install/:id',(req,res)=>{ 
+  show(req,res,req.params.id);
+});
+
+async function show(req,res,id){
+  var cont = [];
+  for(i =0; i< intructions[id].install.length;i++){
+    const { stdout, stderr } = await exec(intructions[id].install[i]);
+    console.log('stdout:', stdout);
+    cont.push({ 
+      display:intructions[id].display[i],
+      stdout:stdout
+    })
+  }
+  res.render('install',{data:cont});
+}
+
 router.get("/editor", function (req, res) {
-  process.exec('/usr/sbin/sshd -D',(err,stdout,stderr)=>{
-    if (err) {  
-      console.error(err);  
-      return;  
-    }  
-    console.log(stderr);
-    console.log(stdout);  
-    res.render("term.ejs",{data:data});
-  })
+  // process.exec('service ssh start',(err,stdout,stderr)=>{
+  //   if (err) {  
+  //     console.error(err);  
+  //     return;  
+  //   }  
+  //   console.log(stderr);
+  //   console.log(stdout);  
+    
+  // })
+  res.render("term.ejs",{data:data});
 });
 
 router.post("/editor",function(req,res){
@@ -102,7 +168,7 @@ router.post("/editor",function(req,res){
 });
 
 router.get('/show/loading',(req,res)=>{
-  res.send('<h1>Application is being loaded</h1>');
+  res.render("split");
 });
 
 router.post('/show/:id',(req,res)=>{

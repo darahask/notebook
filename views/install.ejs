@@ -1,22 +1,36 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    <title>Installation</title>
   </head>
   <body>
-    <div style="width: fit-content; margin:300px auto;">
-      <ul class="list-group">
-        <li class="list-group-item active">Steps to follow to launch GUI Apps</li>
-        <li class="list-group-item">Ssh to username@localhost:3000</li>
-        <li class="list-group-item">Enter password</li>
-        <li class="list-group-item">Enter the command to launch gui</li>
-        <li class="list-group-item">Enjoy the hassle free launch.</li>
-      </ul>
+  
+    <nav class="navbar navbar-dark bg-dark">
+      <div class="container">
+        <a class="navbar-brand" href="#">Installation</a>
+        <button class="btn btn-primary" onclick="nextButton()">Next</button>
+      </div>
+    </nav>
+
+   <div class="container">
+    <div class="d-flex flex-column bd-highlight mb-3">
+      <% data.forEach((obj)=>{ %>
+        <div class="p-2 bd-highlight border border-primary rounded mt-3"><%=obj.display %></div>
+        <div class="p-2 bd-highlight mt-3 border rounded" style="background-color: black; color: white;"><%=obj.stdout %></div>
+      <% }) %>
     </div>
+   </div>
+
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <script src="/scripts/install.js"></script>
   </body>
 </html>

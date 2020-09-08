@@ -9,8 +9,11 @@ var indexRoutes = require('./routes/index')
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + '/public'));
 app.use(express.static(__dirname + '/node_modules'));
-app.use(bodyParser.json()); 
-app.use(bodyParser.urlencoded({ urlencoded: true, extended: true }));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+  urlencoded: true,
+  extended: true
+}));
 app.use(indexRoutes);
 
 //Socket Code
@@ -32,7 +35,7 @@ io.on("connection", function (socket) {
             "\r\n*** SSH SHELL ERROR: " + err.message + " ***\r\n"
           );
         socket.on("data", function (data) {
-            stream.write(data);
+          stream.write(data);
         });
         stream
           .on("data", function (d) {
@@ -43,7 +46,7 @@ io.on("connection", function (socket) {
           });
       })
     })
-    .on("close", function () {  
+    .on("close", function () {
       socket.emit("data", "\r\n*** SSH CONNECTION CLOSED ***\r\n");
     })
     .on("error", function (err) {
@@ -55,5 +58,5 @@ io.on("connection", function (socket) {
 
 });
 
-server.listen(process.env.PORT,process.env.IP);
+server.listen(8000);
 console.log('SERVER STARTED!!!');

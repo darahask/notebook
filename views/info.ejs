@@ -19,9 +19,11 @@
     <nav class="navbar navbar-dark bg-dark">
       <div class="container">
         <a class="navbar-brand" href="#">Installation Sheet</a>
-        <button class="btn btn-primary" onclick="nextButton()">Next -></button>
+        <button class="btn btn-primary" onclick="nextButton()">Next</button>
       </div>
     </nav>
+
+    <form id="myform" action="/install/<%=data.route%>" method="GET" style="display: none;"></form>
 
     <div class="container mt-3 mb-4">
       <div>
@@ -29,7 +31,7 @@
         <a href="?download=i" class="float-right">Instruction Sheet</a>
       </div>
       <div class="text-center border rounded" style="font-size: 18px;">
-        <% data.forEach((str)=>{ %> <%- str.replace(/\n/g,"<br />") %>
+        <% data.inst.forEach((str)=>{ %> <%- str.replace(/\n/g,"<br />") %>
         <br />
         <% }) %>
       </div>
